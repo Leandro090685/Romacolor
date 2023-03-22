@@ -7,14 +7,24 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
+
 class MovementListView(generics.ListAPIView):
     queryset = Movements.objects.all()
     serializer_class = MovementSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['client__client','type',]
+    filterset_fields = ['name__name','type',]
 
 class MovementTotalListView(APIView):
     def get(self,request,name,*args, **kwargs):
-        query = Movements.objects.filter(client__client = name)
+        query = Movements.objects.filter(name__name = name)
         response = query.aggregate(suma=Sum("amount"))
         return Response(response)
+    
+class CuentaCorriente(APIView):
+    def get(self,request,name):
+        name = self.kwargs['name']
+        queryset = Movements.objects.filter(name__name = name)
+        serializer = MovementSerializer(queryset, many = True)
+        return Response (serializer.data)
+        
+

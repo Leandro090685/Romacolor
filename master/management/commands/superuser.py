@@ -3,9 +3,7 @@ from django.contrib.auth import get_user_model
 
 class Command(BaseCommand):
     def handle(self, *args, **options) -> None:
-        print (args)
-        print(options)
         user = get_user_model()
-        user.objects.create_superuser('admin', 'admin@admin.com', '1234')
+        user.objects.create_superuser('leandro', 'admin@admin.com', '1234')
 
         

@@ -7,7 +7,7 @@ class MovementType(models.TextChoices):
 
 
 class Movements(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
+    name = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
     date = models.DateField(auto_now=True)
     type = models.TextField(choices=MovementType.choices, blank=False)
     description = models.TextField(max_length=128)
@@ -15,4 +15,4 @@ class Movements(models.Model):
     amount = models.FloatField()
 
     def __str__(self) -> str:
-        return f"{self.client} {self.type}"
+        return f"{self.name} {self.type}"
