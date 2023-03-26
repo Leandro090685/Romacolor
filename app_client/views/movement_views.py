@@ -20,11 +20,3 @@ class MovementTotalListView(APIView):
         response = query.aggregate(suma=Sum("amount"))
         return Response(response)
     
-class CuentaCorriente(APIView):
-    def get(self,request,name):
-        name = self.kwargs['name']
-        queryset = Movements.objects.filter(name__name = name)
-        serializer = MovementSerializer(queryset, many = True)
-        return Response (serializer.data)
-        
-
